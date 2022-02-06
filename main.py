@@ -3,10 +3,6 @@ import pandas as pd
 import seaborn as sns
 import json
 import numpy as np
- # open json file
- # pre: file name (in json)
- # Stirngs: value1 and value2, where value1/value2
- # is (pressure, volume, or flow)
 
 # Output a graph based on values
 # pre: numpy arrays that represent x and y data points
@@ -24,17 +20,9 @@ def graph(xValues, yValues, xLabel, yLabel):
     xpoints = np.array(xValues)
     ypoints = np.array(yValues)
 
-    # plt.axhline(y=0, color='k')
-    plt.axvline(x=0, color='k')
-
     plt.plot(xpoints, ypoints)
-    plt.show()
 
 
-# def createDic(volume, time, flow, pressure, volTime):
-#     if volume.length == time.length :
-#         for x in range(0, volume.length - 1):
-#             volTime[time[x]] = volume[x], flow[x], pressure[x]
 
 def compliance(pressure, volume):
     deltaV = volume[len(volume) - 1] - volume[0]
@@ -103,6 +91,27 @@ def main(jsonFile):
 
     # Pressure flow graph
     # graph(time, pressure)
+    plt.subplot(2, 3, 1)
+    graph(time, pressure, "seconds", "cm_H2O")
+    plt.title("Pressure/Time Graph")
+
+    plt.subplot(2, 3, 2)
+    graph(time, volume, "seconds", "mL" )
+    plt.title("Volume/Time Graph")
+
+    plt.subplot(2, 3, 3)
+    graph(time, pressure,"seconds", "L/min" )
+    plt.title("Pressure/Time Graph")
+
+    plt.subplot(2, 3, 4)
+    graph(volume, flow,"mL", "L/min")
+    plt.title("Flow/Volume Graph")
+
+    plt.subplot(2, 3, 5)
     graph(volume, pressure, "mL", "cm_H2O")
+    plt.title("Pressure/Volume Graph")
+    plt.show()
+
+    plt.suptitle("Ventilator Data Graphs")
 
 main('view.json')
