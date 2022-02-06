@@ -7,3 +7,12 @@ Contributors:
 <br> Rishi Bathina - Software Developer/Engineer
 <br> Ziao Yin - Medical Researcher/Engineer
 <br> Truc Mai - Medical Researcher/Engineer
+<br>
+
+<h1> Functions </h1>
+createTable(jsonFile) - Intakes a JSON file, creates a CSV file
+```python
+``` 
+printTable(jsonFile) - 
+graphOutput(jsonFile) - 
+compareGraphs
