@@ -41,7 +41,7 @@ def createTable(jsonFile):
             'Pressure': pressure}
 
     df = pd.DataFrame(dict)
-    df.to_csv('DataTable', sep='\t')
+    df.to_csv('DataTable.csv', index=False)
 def compliance(pressure, volume):
     deltaV = volume[len(volume) - 1] - volume[0]
     deltaP = pressure[len(pressure) - 1] - pressure[0]
@@ -121,7 +121,7 @@ def graphOutput(jsonFile):
 
     plt.subplot(2, 3, 3)
     graph(time, flow,"seconds", "L/min" )
-    plt.title("Pressure/Time Graph")
+    plt.title("FLow/Time Graph")
 
     plt.subplot(2, 3, 4)
     graph(volume, flow,"mL", "L/min")
