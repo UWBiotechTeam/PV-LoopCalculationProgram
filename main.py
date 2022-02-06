@@ -46,7 +46,12 @@ def peakInspirationPressure(pressure):
             maxValue = pressure[x]
     return maxValue
 
-
+def positiveEndExpiratory(pressure):
+    minValue = 999999999
+    for x in range(len(pressure)):
+        if pressure[x] < minValue:
+            minValue = pressure[x]
+    return minValue
 # Residual volume is for Flow V Volume
 # pre: a NumPy array (x axis) of Volume(t)
 #      a NumPy array (y-axis) of Flow
