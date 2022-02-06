@@ -35,3 +35,5 @@ graphOutput(jsonFile) - Intakes JSON file, outputs GUI with 5 graphs: <br>
 ```python
 graphOutput('data.json') # data.json is the inputted json file
 ```
+![image](https://user-images.githubusercontent.com/57535849/152705252-584d1190-5921-45e7-a1f8-fb96da1cae78.png)
+
