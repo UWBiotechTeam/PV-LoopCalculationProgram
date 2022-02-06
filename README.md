@@ -10,7 +10,7 @@ Contributors:
 <br>
 
 <h1> Functions </h1> <br>
-printTable(jsonFile) - Intakes a JSON file, prints out organzied data values <br>
+printTable(jsonFile) - Intakes a JSON file, prints out organzied data values
 ```python
 printTable('data.json') # data.json is the inputted json file
 ```
