@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from tabulate import tabulate
 import seaborn as sns
 import json
 import numpy as np
-from IPython.display import display, HTML
-import tabulate
+
 
 # Output a graph based on values
 # pre: numpy arrays that represent x and y data points
@@ -42,6 +42,22 @@ def createTable(jsonFile):
 
     df = pd.DataFrame(dict)
     df.to_csv('DataTable.csv', index=False)
+
+def printTable(jsonFile):
+    result = loadJson(jsonFile)
+    time = result[0]
+    pressure = result[1]
+    volume = result[2]
+    flow = result[3]
+
+    dict = {'Time': time,
+            'Flow': flow,
+            'Volume': volume,
+            'Pressure': pressure}
+
+    df = pd.DataFrame(dict)
+    print(tabulate(df, headers='keys', tablefmt='pretty'))
+
 def compliance(pressure, volume):
     deltaV = volume[len(volume) - 1] - volume[0]
     deltaP = pressure[len(pressure) - 1] - pressure[0]
@@ -121,7 +137,7 @@ def graphOutput(jsonFile):
 
     plt.subplot(2, 3, 3)
     graph(time, flow,"seconds", "L/min" )
-    plt.title("FLow/Time Graph")
+    plt.title("Flow/Time Graph")
 
     plt.subplot(2, 3, 4)
     graph(volume, flow,"mL", "L/min")
@@ -166,4 +182,5 @@ def compareGraphs(jsonFile1, jsonFile2):
 # Running the code
 # graphOutput('view.json')
 
-createTable('view.json')
+#createTable('view.json')
+printTable('view.json')
