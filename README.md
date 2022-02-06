@@ -31,6 +31,7 @@ graphOutput(jsonFile) - Intakes JSON file, outputs GUI with 5 graphs: <br>
                         3) Flow/Time <br>
                         4) Flow/Volume <br>
                         5) Pressure/Volume <br>
+                        
 ```python
 graphOutput('data.json') # data.json is the inputted json file
 ```
