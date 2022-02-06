@@ -27,7 +27,7 @@ createTable('data.json') # data.json is the inputted json file
 ```
 
 <br>
-graphOutput(jsonFile) - Intakes JSON file, outputs GUI with 5 graphs: <br>
+<h3> graphOutput(jsonFile) </h3> - Intakes JSON file, outputs GUI with 5 graphs: <br>
                         1) Pressure/Time <br>
                         2) Volume/Time <br>
                         3) Flow/Time <br>
