@@ -83,6 +83,7 @@ def loadJson(jsonFile):
 
 # setting values after loading
 def main(jsonFile):
+    global time, pressure, volume, flow
     result = loadJson(jsonFile)
     time = result[0]
     pressure = result[1]
@@ -110,8 +111,11 @@ def main(jsonFile):
     plt.subplot(2, 3, 5)
     graph(volume, pressure, "mL", "cm_H2O")
     plt.title("Pressure/Volume Graph")
-    plt.show()
+
 
     plt.suptitle("Ventilator Data Graphs")
+    plt.tight_layout()
+
+    plt.show()
 
 main('view.json')
