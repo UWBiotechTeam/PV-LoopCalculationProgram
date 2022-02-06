@@ -12,8 +12,8 @@ Contributors:
 <h1> Functions </h1>
 createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads directly to user's computer) <br>
 ```python
-# calling the function
-createTable("data.json") # data.json is the ventilator data
+
+  createTable('view.json')
 
 ```
 <br> Output: CSV File with organized data in relation to time
