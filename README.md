@@ -39,3 +39,12 @@ graphOutput('data.json') # data.json is the inputted json file
 ```
 ![image](https://user-images.githubusercontent.com/57535849/152705252-584d1190-5921-45e7-a1f8-fb96da1cae78.png)
 
+<h3> compareGraphs(jsonFile1, jsonFile2) </h3>
+Intakes two JSON files, graphs them and overlays the results. Allows for comparison of multiple datasets.
+
+```python
+graphOutput('data.json', 'diseased.json) # data.json is the inputted json file, diseased.json is the inputted disease data
+```
+
+![image](https://user-images.githubusercontent.com/57535849/152705520-942c38c8-ded9-4994-99c8-8f6d1be1878d.png)
+
