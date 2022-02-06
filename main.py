@@ -28,8 +28,6 @@ def graph(xValues, yValues, xLabel, yLabel):
 
     plt.plot(xpoints, ypoints)
 
-
-
 def compliance(pressure, volume):
     deltaV = volume[len(volume) - 1] - volume[0]
     deltaP = pressure[len(pressure) - 1] - pressure[0]
@@ -109,7 +107,7 @@ def graphOutput(jsonFile):
     plt.title("Volume/Time Graph")
 
     plt.subplot(2, 3, 3)
-    graph(time, pressure,"seconds", "L/min" )
+    graph(time, flow,"seconds", "L/min" )
     plt.title("Pressure/Time Graph")
 
     plt.subplot(2, 3, 4)
@@ -127,6 +125,34 @@ def graphOutput(jsonFile):
 
     plt.show()
 
+<<<<<<< HEAD
+def compareGraphs(jsonFile1, jsonFile2):
+    result = loadJson(jsonFile1)
+    volume = result[2]
+    flow = result[3]
+
+    result2 = loadJson(jsonFile2)
+    volume2 = result2[2]
+    flow2 = result2[3]
+
+    plt.axhline(y=0, color='k')
+
+    plt.plot(volume, flow, alpha = 0.5, label = jsonFile1)
+    plt.plot(volume2, flow2, alpha=0.5, label = jsonFile2)
+    plt.xlabel("Volume")
+    plt.ylabel("Flow")
+
+
+    plt.title("Comparison between " + jsonFile1 + " and " + jsonFile2)
+    plt.legend(loc='upper right')
+
+    plt.show()
+
 
 # Running the code
+compareGraphs('view.json', 'diseased.json')
+
+
+# Running the code
+
 graphOutput('view.json')
