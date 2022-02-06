@@ -2,20 +2,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import json
 import numpy as np
-
-# xpoints = np.array([0,5])
-# ypoints = np.array([0,250])
-#
-# plt.plot(xpoints, ypoints)
-# plt.show()
-
  # open json file
  # pre: file name (in json)
-def loadJson(jsonFile):
-    with open(jsonFile, 'r') as fileData:
-        data = fileData.read()
-
-    obj = json.loads(data)
+ # Stirngs: value1 and value2, where value1/value2
+ # is (pressure, volume, or flow)
 
 # Output a graph based on values
 # pre: numpy arrays that represent x and y data points
@@ -25,7 +15,10 @@ def loadJson(jsonFile):
 # PV-plot -> graph(volume, pressure)
 # FV-plot -> graph(volume, flow)
 def graph(xValues, yValues):
-    plt.plot(xValues, yValues)
+    xpoints = np.array(xValues)
+    ypoints = np.array(yValues)
+
+    plt.plot(xpoints, ypoints)
     plt.show()
 
 # def createDic(volume, time, flow, pressure, volTime):
@@ -71,18 +64,33 @@ def positiveEndExpiratory(pressure):
 # pressure volume code
 
 # Testing
+def loadJson(jsonFile):
 
-volume = np.array([0,1,2,3,4,5])
-flow = np.array([0,1,3,5,6,0])
-time = np.array([1,2,3,4,5,6])
-pressure = np.array([0,1,3,5,6,0])
-volTime = {}
+    f = open(jsonFile)
+    data = json.load(f)
 
-# cock = residualVolume(volume, flow)
-# print(cock)
+    time = []
+    PList = [] # value of value1
+    VList = []
+    FList = []
 
-#given volume(t), pressure(t), and flow(t)
-# need to create flow(volume)
+    for x in range(len(data['Data1'][0]['Flow'])):
+        time.append(float(data['Data1'][0]['Pressure'][x]['x']))
+        PList.append(float(data['Data1'][0]['Pressure'][x]['y']))
+        VList.append(float(data['Data1'][0]['Volume'][x]['y']))
+        FList.append(float(data['Data1'][0]['Flow'][x]['y']))
 
-# json data: time increments of 0.1 or
-             # volume, flow, or pressure
+    return time, PList, VList, FList
+
+
+# setting values after loading
+result = loadJson('view.json')
+time = result[0]
+pressure = result[1]
+volume = result[2]
+flow = result[3]
+
+# Pressure flow graph
+graph(time, pressure)
+#graph(volume, pressure)
+# graph(volume, flow)
