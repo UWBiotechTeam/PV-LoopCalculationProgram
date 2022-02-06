@@ -3,7 +3,6 @@ import pandas as pd
 import seaborn as sns
 import json
 import numpy as np
-from tabulate import tabulate
 
 # Output a graph based on values
 # pre: numpy arrays that represent x and y data points
@@ -17,6 +16,12 @@ def graph(xValues, yValues, xLabel, yLabel):
 
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
+
+    plt.margins(0)
+    plt.grid(True, which='both')
+
+    plt.axhline(y=0, color='k')
+    plt.axvline(x=0, color='k')
 
     xpoints = np.array(xValues)
     ypoints = np.array(yValues)
@@ -62,58 +67,36 @@ def positiveEndExpiratory(pressure):
 
 # pressure volume code
 
-def createDic():
-    theDictionary = {'Pressure': [], 'Volume': [], 'Flow': [], 'Compliance': [], 'Peak Inspiration Pressure': [], 'Positive End Expiratory': []}
-    for x in range(len(pressure)):
-        theDictionary['Pressure'][x] = pressure[x]
-    for x in range(len(volume)):
-        theDictionary['volume'][x] = volume[x]
-    for x in range(len(flow)):
-        theDictionary['Flow'][x] = flow[x]
-    for x in range(len(pressure) - 2):
-        theDictionary['Compliance'][x] = 'N/A'
-    theDictionary['Compliance'][len(pressure) - 1] = compliance(pressure, volume)
-    for x in range(len(pressure) - 2):
-        theDictionary['Peak Inspiration Pressure'][x] = 'N/A'
-    theDictionary['Peak Inspiration Pressure'][len(pressure) - 1] = peakInspirationPressure(pressure)
-    for x in range(len(pressure) - 2):
-        theDictionary['Positive End Expiratory'][x] = 'N/A'
-    theDictionary['Positive End Expiratory'][len(pressure) - 1] = positiveEndExpiratory(pressure)
-    return theDictionary
-
-def createTable(dict):
-    print(tabulate(dict, headers='keys', tablefmt='fancy_grid', showIndex=True))
-
 # Testing
 def loadJson(jsonFile):
 
     f = open(jsonFile)
     data = json.load(f)
 
+    first_key = next(iter(data))
+
     time = []
     PList = [] # value of value1
     VList = []
     FList = []
 
-    for x in range(len(data['Data1'][0]['Flow'])):
-        time.append(float(data['Data1'][0]['Pressure'][x]['x']))
-        PList.append(float(data['Data1'][0]['Pressure'][x]['y']))
-        VList.append(float(data['Data1'][0]['Volume'][x]['y']))
-        FList.append(float(data['Data1'][0]['Flow'][x]['y']))
+    for x in range(len(data[first_key][0]['Flow'])):
+        time.append(float(data[first_key][0]['Pressure'][x]['x']))
+        PList.append(float(data[first_key][0]['Pressure'][x]['y']))
+        VList.append(float(data[first_key][0]['Volume'][x]['y']))
+        FList.append(float(data[first_key][0]['Flow'][x]['y']))
 
     return time, PList, VList, FList
 
 
 # setting values after loading
-def main(jsonFile):
+def graphOutput(jsonFile):
     global time, pressure, volume, flow
     result = loadJson(jsonFile)
     time = result[0]
     pressure = result[1]
     volume = result[2]
     flow = result[3]
-    theDictionary = createDic()
-    createTable(theDictionary)
 
     # Pressure flow graph
     # graph(time, pressure)
@@ -131,6 +114,7 @@ def main(jsonFile):
 
     plt.subplot(2, 3, 4)
     graph(volume, flow,"mL", "L/min")
+    plt.ylim([min(flow) -1, max(flow) +5])
     plt.title("Flow/Volume Graph")
 
     plt.subplot(2, 3, 5)
@@ -143,4 +127,6 @@ def main(jsonFile):
 
     plt.show()
 
-main('view.json')
+
+# Running the code
+graphOutput('view.json')
