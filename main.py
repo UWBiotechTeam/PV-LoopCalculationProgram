@@ -18,18 +18,8 @@ def graph(xValues, yValues, xLabel, yLabel):
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
 
-    plt.margins(0)
-    plt.grid(True, which='both')
-
-    plt.axhline(y=0, color='k')
-    plt.axvline(x=0, color='k')
-
     xpoints = np.array(xValues)
     ypoints = np.array(yValues)
-
-    plt.xlim()
-    plt.ylim([-1, 0])
-
 
     plt.plot(xpoints, ypoints)
 
@@ -100,24 +90,22 @@ def loadJson(jsonFile):
     f = open(jsonFile)
     data = json.load(f)
 
-    first_key = next(iter(data))
-
     time = []
     PList = [] # value of value1
     VList = []
     FList = []
 
-    for x in range(len(data[first_key][0]['Flow'])):
-        time.append(float(data[first_key][0]['Pressure'][x]['x']))
-        PList.append(float(data[first_key][0]['Pressure'][x]['y']))
-        VList.append(float(data[first_key][0]['Volume'][x]['y']))
-        FList.append(float(data[first_key][0]['Flow'][x]['y']))
+    for x in range(len(data['Data1'][0]['Flow'])):
+        time.append(float(data['Data1'][0]['Pressure'][x]['x']))
+        PList.append(float(data['Data1'][0]['Pressure'][x]['y']))
+        VList.append(float(data['Data1'][0]['Volume'][x]['y']))
+        FList.append(float(data['Data1'][0]['Flow'][x]['y']))
 
     return time, PList, VList, FList
 
 
 # setting values after loading
-def graphOutput(jsonFile):
+def main(jsonFile):
     global time, pressure, volume, flow
     result = loadJson(jsonFile)
     time = result[0]
@@ -130,7 +118,7 @@ def graphOutput(jsonFile):
     # Pressure flow graph
     # graph(time, pressure)
     plt.subplot(2, 3, 1)
-    a = graph(time, pressure, "seconds", "cm_H2O")
+    graph(time, pressure, "seconds", "cm_H2O")
     plt.title("Pressure/Time Graph")
 
     plt.subplot(2, 3, 2)
@@ -155,10 +143,4 @@ def graphOutput(jsonFile):
 
     plt.show()
 
-<<<<<<< HEAD
-
-# Running the code
-graphOutput('view.json')
-=======
 main('view.json')
->>>>>>> 7abfafd13452d4eb1c8b51497e228309cb8c723b
