@@ -11,9 +11,9 @@ Contributors:
 
 <h1> Functions </h1> <br>
 createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads directly to user's computer) <br>
-```
+```python
 function test() {
   console.log("notice the blank line before this function?");
 }
-```
+
 
