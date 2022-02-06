@@ -13,6 +13,9 @@ Contributors:
 createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads directly to user's computer)
 <br>
 ```python
+
+createTable(jsonFile)
+
 ```
 
 
