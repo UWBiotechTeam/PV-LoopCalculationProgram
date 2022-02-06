@@ -10,10 +10,16 @@ Contributors:
 <br>
 
 <h1> Functions </h1>
-createTable(jsonFile) - Intakes a JSON file, creates a CSV file
-```python
+createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads directly to user's computer) <br>
 ```
+# calling the function
+createTable("data.json") # data.json is the ventilator data
 
-<br> printTable(jsonFile) - 
+```
+<br> Output: CSV File with organized data in relation to time
+<br> ![image](https://user-images.githubusercontent.com/57535849/152704611-c6da0908-4da0-4caa-975b-f155e47aadfb.png)
+
+
+<br> printTable(jsonFile) - Intakes 
 <br> graphOutput(jsonFile) - 
 <br> compareGraphs
