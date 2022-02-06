@@ -11,9 +11,10 @@ Contributors:
 
 <h1> Functions </h1> <br>
 printTable(jsonFile) - Intakes a JSON file, prints out organzied data values
+<br>
 ```python
 printTable('data.json') # data.json is the inputted json file
-```
+
 <img src="https://user-images.githubusercontent.com/57535849/152704873-4549cf48-0253-4443-afc7-5e89999c69cb.png" width="300" height="250"> <br>
 
 createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads directly to user's computer) <br>
