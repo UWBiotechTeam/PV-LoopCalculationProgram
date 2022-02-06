@@ -3,6 +3,7 @@ import pandas as pd
 import seaborn as sns
 import json
 import numpy as np
+from tabulate import tabulate
 
 # Output a graph based on values
 # pre: numpy arrays that represent x and y data points
@@ -61,6 +62,28 @@ def positiveEndExpiratory(pressure):
 
 # pressure volume code
 
+def createDic():
+    theDictionary = {'Pressure': [], 'Volume': [], 'Flow': [], 'Compliance': [], 'Peak Inspiration Pressure': [], 'Positive End Expiratory': []}
+    for x in range(len(pressure)):
+        theDictionary['Pressure'][x] = pressure[x]
+    for x in range(len(volume)):
+        theDictionary['volume'][x] = volume[x]
+    for x in range(len(flow)):
+        theDictionary['Flow'][x] = flow[x]
+    for x in range(len(pressure) - 2):
+        theDictionary['Compliance'][x] = 'N/A'
+    theDictionary['Compliance'][len(pressure) - 1] = compliance(pressure, volume)
+    for x in range(len(pressure) - 2):
+        theDictionary['Peak Inspiration Pressure'][x] = 'N/A'
+    theDictionary['Peak Inspiration Pressure'][len(pressure) - 1] = peakInspirationPressure(pressure)
+    for x in range(len(pressure) - 2):
+        theDictionary['Positive End Expiratory'][x] = 'N/A'
+    theDictionary['Positive End Expiratory'][len(pressure) - 1] = positiveEndExpiratory(pressure)
+    return theDictionary
+
+def createTable(dict):
+    print(tabulate(dict, headers='keys', tablefmt='fancy_grid', showIndex=True))
+
 # Testing
 def loadJson(jsonFile):
 
@@ -89,6 +112,8 @@ def main(jsonFile):
     pressure = result[1]
     volume = result[2]
     flow = result[3]
+    theDictionary = createDic()
+    createTable(theDictionary)
 
     # Pressure flow graph
     # graph(time, pressure)
