@@ -14,8 +14,7 @@ createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads direc
 <br>
 ```python
 
-createTable(jsonFile)
-
 ```
+createTable(jsonFile)
 
 
