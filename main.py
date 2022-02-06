@@ -163,10 +163,12 @@ def graphOutput(jsonFile):
     # Pressure flow graph
     # graph(time, pressure)
     result = loadJson(jsonFile)
+    global time, pressure, volume, flow
     time = result[0]
     pressure = result[1]
     volume = result[2]
     flow = result[3]
+    #global time, pressure, volume, flow
 
     compliance1 = compliance(pressure, volume)
     positiveEndExpiratory1 = positiveEndExpiratory(pressure)
@@ -234,6 +236,12 @@ def compareGraphs(jsonFile1, jsonFile2):
 # compareGraphs('view.json', 'diseased.json')
 # Running the code
 graphOutput('view.json')
+
+# UNIT TESTING the different calculations
+assert compliance(pressure, volume) == 16 # Should be 16, based on the test file given
+assert resistence(pressure, volume) == 3.5625 # Should be 3.5625, based on the test file given
+assert positiveEndExpiratory(pressure) == 5.0 # Should be 5.0, based on the test file given
+assert peakInspirationPressure(pressure) == 45.0 # Should be 5.0, based on the test file given
 
 # createTable('view.json')
 # printTable('view.json')
