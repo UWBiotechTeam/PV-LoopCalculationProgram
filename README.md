@@ -15,5 +15,6 @@ createTable(jsonFile) - Intakes a JSON file, creates a CSV file (downloads direc
 
 ```python
 createTable('data.json') # data.json is the inputted json file
+```
 
 
