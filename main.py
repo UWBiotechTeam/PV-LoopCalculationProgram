@@ -27,7 +27,12 @@ def graph(xValues, yValues, xLabel, yLabel):
     ypoints = np.array(yValues)
 
     plt.plot(xpoints, ypoints)
-
+    
+# pre: Takes in JsonFile for input:
+# Parses through and seperates the 
+# time, pressure, volume, and flow values. 
+# post: creates a dictionary with those and 
+# converts it into a csv file.
 def createTable(jsonFile):
     result = loadJson(jsonFile)
     time = result[0]
@@ -43,6 +48,9 @@ def createTable(jsonFile):
     df = pd.DataFrame(dict)
     df.to_csv('DataTable.csv', index=False)
 
+# same concept as create table
+# post: Prints out a table
+# instead of a downloadable csv file.
 def printTable(jsonFile):
     result = loadJson(jsonFile)
     time = result[0]
@@ -58,12 +66,19 @@ def printTable(jsonFile):
     df = pd.DataFrame(dict)
     print(tabulate(df, headers='keys', tablefmt='pretty'))
 
+# Pre: Takes in pressure and volume arrays
+# These hold the values of the pressure and volume,
+# in chronological order
+# Post: calculates the compliance value
 def compliance(pressure, volume):
     deltaV = peakVolume(volume) - volume[0]
     deltaP = peakInspirationPressure(pressure) - pressure[0]
     compliance = deltaV / deltaP
     return compliance
 
+# Pre: takes in pressure array
+# Post: returns the highest value in that array,
+# corresponding to the Peak Inspiration Pressure.
 def peakInspirationPressure(pressure):
     maxValue = 0
     for x in range(len(pressure)):
@@ -71,6 +86,9 @@ def peakInspirationPressure(pressure):
             maxValue = pressure[x]
     return maxValue
 
+# Pre: takes in pressure arrays 
+# Post: returns the min value for the pressure, 
+# or the Positive End Expiratory value.
 def positiveEndExpiratory(pressure):
     minValue = 999999999
     for x in range(len(pressure)):
@@ -78,6 +96,8 @@ def positiveEndExpiratory(pressure):
             minValue = pressure[x]
     return minValue
 
+# Pre: takes in a volume array
+# Post: returns the max volume value.
 def peakVolume(volume):
     maxValue = 0
     for x in range(len(volume)):
@@ -85,6 +105,10 @@ def peakVolume(volume):
             maxValue = volume[x]
     return maxValue
 
+# Pre: takes in a pressure arary
+# Post: returns the plateau pressure.
+# Does this by finding the second occurance at which
+# two consecutive pressure values are equal.
 def platPressure(pressure):
     equalValue = -15
     begValue = pressure[0]
@@ -95,6 +119,9 @@ def platPressure(pressure):
             else:
                 equalValue = pressure[x]
 
+# Pre: takes in pressure and volume arrays.
+# Post: returns the resistence based on the 
+# given data from the arrays.
 def resistence(pressure, volume):
     deltaV = peakVolume(volume) / 60 - volume[0]
     resistence = (peakInspirationPressure(pressure) - platPressure(pressure)) / deltaV
@@ -121,6 +148,8 @@ def loadJson(jsonFile):
 
     return time, PList, VList, FList
 
+# Pre: JsonFile with data
+# Post: creates graph for flow versus volume
 def flowVVolume(jsonFile):
     result = loadJson(jsonFile)
     volume = result[2]
