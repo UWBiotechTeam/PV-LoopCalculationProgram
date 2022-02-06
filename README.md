@@ -12,7 +12,8 @@ Contributors:
 <h1> Functions </h1>
 createTable(jsonFile) - Intakes a JSON file, creates a CSV file
 ```python
-``` 
-printTable(jsonFile) - 
-graphOutput(jsonFile) - 
-compareGraphs
+```
+
+<br> printTable(jsonFile) - 
+<br> graphOutput(jsonFile) - 
+<br> compareGraphs
