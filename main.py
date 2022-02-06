@@ -39,6 +39,14 @@ def compliance(pressure, volume):
     compliance = deltaV / deltaP
     return compliance
 
+def peakInspirationPressure(pressure):
+    maxValue = 0 
+    for x in range(len(pressure)):
+        if pressure[x] > maxValue:
+            maxValue = pressure[x]
+    return maxValue
+
+
 # Residual volume is for Flow V Volume
 # pre: a NumPy array (x axis) of Volume(t)
 #      a NumPy array (y-axis) of Flow
