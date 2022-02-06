@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 import json
 import numpy as np
@@ -14,12 +15,21 @@ import numpy as np
 # Allows graphing PV and FV
 # PV-plot -> graph(volume, pressure)
 # FV-plot -> graph(volume, flow)
-def graph(xValues, yValues):
+def graph(xValues, yValues, xLabel, yLabel):
+    plt.grid(True, which='both')
+
+    plt.xlabel(xLabel)
+    plt.ylabel(yLabel)
+
     xpoints = np.array(xValues)
     ypoints = np.array(yValues)
 
+    # plt.axhline(y=0, color='k')
+    plt.axvline(x=0, color='k')
+
     plt.plot(xpoints, ypoints)
     plt.show()
+
 
 # def createDic(volume, time, flow, pressure, volTime):
 #     if volume.length == time.length :
@@ -33,7 +43,7 @@ def compliance(pressure, volume):
     return compliance
 
 def peakInspirationPressure(pressure):
-    maxValue = 0 
+    maxValue = 0
     for x in range(len(pressure)):
         if pressure[x] > maxValue:
             maxValue = pressure[x]
@@ -54,7 +64,7 @@ def positiveEndExpiratory(pressure):
 #             return x
 #
 #     return "no data found"
-# 
+#
 # # Total Lung Capacity
 # # pre: a numpy array (x-axis) of Time
 # #      a numpy array (y-axis) of volume
@@ -84,13 +94,15 @@ def loadJson(jsonFile):
 
 
 # setting values after loading
-result = loadJson('view.json')
-time = result[0]
-pressure = result[1]
-volume = result[2]
-flow = result[3]
+def main(jsonFile):
+    result = loadJson(jsonFile)
+    time = result[0]
+    pressure = result[1]
+    volume = result[2]
+    flow = result[3]
 
-# Pressure flow graph
-graph(time, pressure)
-#graph(volume, pressure)
-# graph(volume, flow)
+    # Pressure flow graph
+    # graph(time, pressure)
+    graph(volume, pressure, "mL", "cm_H2O")
+
+main('view.json')
