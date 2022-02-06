@@ -144,7 +144,6 @@ def graphOutput(jsonFile):
 
     plt.subplot(2, 3, 1)
     graph(time, pressure, "seconds", "cm_H2O")
-    plt.figtext(.8, .8, "positiveEndExpiratory: " + str(positiveEndExpiratory1))
     plt.title("Pressure/Time Graph")
 
     plt.subplot(2, 3, 2)
@@ -161,12 +160,15 @@ def graphOutput(jsonFile):
 
     plt.subplot(2, 3, 5)
     graph(volume, pressure, "mL", "cm_H2O")
-    plt.figtext(.9, .8, "Compliance = " + str(compliance1))
+
     plt.title("Pressure/Volume Graph")
 
 
     plt.suptitle("Ventilator Data Graphs")
     plt.tight_layout()
+
+    plt.figtext(.75, .43, "positiveEndExpiratory: " + str(positiveEndExpiratory1))
+    plt.figtext(.75, .4, "Compliance = " + str(compliance1))
 
     plt.show()
 
