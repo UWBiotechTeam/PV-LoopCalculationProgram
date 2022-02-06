@@ -59,8 +59,8 @@ def printTable(jsonFile):
     print(tabulate(df, headers='keys', tablefmt='pretty'))
 
 def compliance(pressure, volume):
-    deltaV = volume[len(volume) - 1] - volume[0]
-    deltaP = pressure[len(pressure) - 1] - pressure[0]
+    deltaV = peakVolume(volume) - volume[0]
+    deltaP = peakInspirationPressure(pressure) - pressure[0]
     compliance = deltaV / deltaP
     return compliance
 
@@ -77,23 +77,28 @@ def positiveEndExpiratory(pressure):
         if pressure[x] < minValue:
             minValue = pressure[x]
     return minValue
-# Residual volume is for Flow V Volume
-# pre: a NumPy array (x axis) of Volume(t)
-#      a NumPy array (y-axis) of Flow
-# def residualVolume(volume, flow):
-#     for (x, y) in zip(volume, flow):
-#         if x != 0 and y == 0 :
-#             return x
-#
-#     return "no data found"
-#
-# # Total Lung Capacity
-# # pre: a numpy array (x-axis) of Time
-# #      a numpy array (y-axis) of volume
-# def totalLungCapacity(volume):
-#     return max(volume)
 
-# pressure volume code
+def peakVolume(volume):
+    maxValue = 0
+    for x in range(len(volume)):
+        if volume[x] > maxValue:
+            maxValue = volume[x]
+    return maxValue
+
+def platPressure(pressure):
+    equalValue = -15
+    begValue = pressure[0]
+    for x in range(len(pressure)):
+        if pressure[x] != begValue:
+            if pressure[x] == equalValue:
+                return pressure[x]
+            else:
+                equalValue = pressure[x]
+
+def resistence(pressure, volume):
+    deltaV = peakVolume(volume) / 60 - volume[0]
+    resistence = (peakInspirationPressure(pressure) - platPressure(pressure)) / deltaV
+    return resistence
 
 # Testing
 def loadJson(jsonFile):
@@ -116,6 +121,13 @@ def loadJson(jsonFile):
 
     return time, PList, VList, FList
 
+def flowVVolume(jsonFile):
+    result = loadJson(jsonFile)
+    volume = result[2]
+    flow = result[3]
+
+    graph(volume, flow,"mL", "L/min")
+    plt.title("Flow/Volume Graph")
 
 # setting values after loading
 def graphOutput(jsonFile):
@@ -127,8 +139,12 @@ def graphOutput(jsonFile):
     volume = result[2]
     flow = result[3]
 
+    compliance1 = compliance(pressure, volume)
+    positiveEndExpiratory1 = positiveEndExpiratory(pressure)
+
     plt.subplot(2, 3, 1)
     graph(time, pressure, "seconds", "cm_H2O")
+    plt.figtext(.8, .8, "positiveEndExpiratory: " + str(positiveEndExpiratory1))
     plt.title("Pressure/Time Graph")
 
     plt.subplot(2, 3, 2)
@@ -143,8 +159,9 @@ def graphOutput(jsonFile):
     graph(volume, flow,"mL", "L/min")
     plt.title("Flow/Volume Graph")
 
-    plt.subplot(2, 3, 6)
+    plt.subplot(2, 3, 5)
     graph(volume, pressure, "mL", "cm_H2O")
+    plt.figtext(.9, .8, "Compliance = " + str(compliance1))
     plt.title("Pressure/Volume Graph")
 
 
@@ -180,7 +197,7 @@ def compareGraphs(jsonFile1, jsonFile2):
 # Running the code
 # compareGraphs('view.json', 'diseased.json')
 # Running the code
-# graphOutput('view.json')
+graphOutput('view.json')
 
-#createTable('view.json')
-printTable('view.json')
+# createTable('view.json')
+# printTable('view.json')
